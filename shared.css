@@ -1,0 +1,130 @@
+/* ================================================
+   AktaşScore — shared.css
+   Sayfa geçiş animasyonları + CSS Logo sistemi
+   ================================================ */
+
+/* ── PAGE ENTER ── */
+@keyframes pageIn {
+  from { opacity: 0; transform: translateX(18px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes pageInLeft {
+  from { opacity: 0; transform: translateX(-18px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+@keyframes pageInUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+body {
+  animation: pageIn 0.28s cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+body.anim-left  { animation-name: pageInLeft; }
+body.anim-up    { animation-name: pageInUp; }
+
+/* ── PAGE EXIT ── */
+body.page-exit {
+  opacity: 0 !important;
+  transform: translateX(-18px) !important;
+  transition: opacity 0.18s ease, transform 0.18s ease !important;
+  pointer-events: none !important;
+}
+body.page-exit-right {
+  opacity: 0 !important;
+  transform: translateX(18px) !important;
+  transition: opacity 0.18s ease, transform 0.18s ease !important;
+  pointer-events: none !important;
+}
+
+/* ── CSS TEAM LOGO ──
+   Kullanım: <div class="tl tl-sm" style="--tc:#e8002d;--tc2:#FFD700">GS</div>
+   API gelince buraya <img> eklenir, tl div'i kaldırılır
+── */
+.tl {
+  border-radius: 8px;
+  background: var(--tc, #1e2740);
+  border: 1px solid rgba(255,255,255,0.12);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-weight: 900;
+  color: rgba(255,255,255,0.92);
+  letter-spacing: -0.5px;
+  flex-shrink: 0;
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
+/* İkinci renk accent çizgisi */
+.tl::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--tc2, rgba(255,255,255,0.2));
+}
+
+.tl-xs  { width: 24px; height: 24px; font-size: 9px;  border-radius: 6px; }
+.tl-sm  { width: 32px; height: 32px; font-size: 12px; border-radius: 8px; }
+.tl-md  { width: 44px; height: 44px; font-size: 16px; border-radius: 12px; }
+.tl-lg  { width: 60px; height: 60px; font-size: 22px; border-radius: 16px; }
+.tl-xl  { width: 72px; height: 72px; font-size: 26px; border-radius: 18px; }
+
+/* ── FAV MATCH STRIP ── */
+.fav-strip-wrap {
+  position: fixed;
+  top: calc(52px + 68px + 48px); /* topbar + date + pills */
+  left: 0; right: 0;
+  z-index: 95;
+  background: linear-gradient(180deg, rgba(7,11,22,0.98) 0%, rgba(7,11,22,0.92) 100%);
+  border-bottom: 1px solid #1c2640;
+}
+.fav-strip-label {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 10px; font-weight: 800;
+  text-transform: uppercase; letter-spacing: 1.5px;
+  color: #ffd600;
+  padding: 8px 16px 4px;
+  display: flex; align-items: center; gap: 6px;
+}
+.fav-strip-label::before {
+  content: '';
+  width: 6px; height: 6px; border-radius: 50%;
+  background: #ffd600;
+  display: inline-block;
+}
+.fav-strip {
+  display: flex; align-items: stretch;
+  overflow-x: auto; scrollbar-width: none;
+  gap: 8px; padding: 0 16px 10px;
+  -webkit-overflow-scrolling: touch;
+}
+.fav-strip::-webkit-scrollbar { display: none; }
+
+.fav-match-card {
+  flex-shrink: 0;
+  background: #0f1629;
+  border: 1px solid #1c2640;
+  border-radius: 12px;
+  padding: 8px 12px;
+  display: flex; align-items: center; gap: 8px;
+  cursor: pointer; min-width: 180px;
+  transition: border-color 0.2s;
+  position: relative;
+}
+.fav-match-card:hover { border-color: #ffd600; }
+.fav-match-card.live { border-left: 3px solid #ff3d57; }
+.fav-mc-team { font-family: 'Barlow Condensed', sans-serif; font-size: 11px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 60px; }
+.fav-mc-score { font-family: 'Barlow Condensed', sans-serif; font-size: 16px; font-weight: 900; color: #e4eaf8; letter-spacing: -0.5px; white-space: nowrap; }
+.fav-mc-status { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; }
+.fav-mc-status.live { color: #ff3d57; }
+.fav-mc-status.upcoming { color: #00e676; }
+.fav-mc-status.finished { color: #6b7a9e; }
+
+/* ── TEAM CLICK INDICATOR ── */
+.team-clickable {
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.15s;
+}
+.team-clickable:hover { background: rgba(255,255,255,0.05); }
